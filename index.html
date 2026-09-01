@@ -1,1 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>О-СРЕДА — Спортивное ориентирование в Карелии</title>
+    <!-- Шрифты: Russo One (кнопки), Oswald (заголовки), Inter (текст) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ========== БАЗОВЫЕ СТИЛИ И ПЕРЕМЕННЫЕ ========== */
+        :root {
+            --bg-deep: #16211A;
+            --bg-forest: #1A2E1F;
+            --bg-pine: #223D2B;
+            --accent-moss: #4C7A34;
+            --accent-lime: #7CB342;
+            --accent-ochre: #B8860B;
+            --accent-tourism: #FF8C00;
+            --text-light: #E0E0E0;
+            --text-white: #FFFFFF;
+            --border-radius: 12px;
+            --transition: all 0.25s ease;
+            --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.3);
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-button: 'Russo One', sans-serif;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ========== ФОН-РЕЛЬЕФ КАРТЫ ========== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%237CB342' stroke-width='0.7' opacity='0.15'%3E%3Cpath d='M0 80 Q100 30, 200 80 T 400 80'/%3E%3Cpath d='M0 120 Q100 70, 200 120 T 400 120'/%3E%3Cpath d='M0 160 Q100 110, 200 160 T 400 160'/%3E%3Cpath d='M0 200 Q100 150, 200 200 T 400 200'/%3E%3Cpath d='M0 240 Q100 190, 200 240 T 400 240'/%3E%3Cpath d='M0 280 Q100 230, 200 280 T 400 280'/%3E%3Cpath d='M0 320 Q100 270, 200 320 T 400 320'/%3E%3Cpath d='M0 360 Q100 310, 200 360 T 400 360'/%3E%3C/g%3E%3Cg fill='none' stroke='%234C7A34' stroke-width='0.5' opacity='0.1'%3E%3Cpath d='M0 40 Q100 10, 200 40 T 400 40'/%3E%3Cpath d='M0 100 Q100 50, 200 100 T 400 100'/%3E%3Cpath d='M0 140 Q100 90, 200 140 T 400 140'/%3E%3Cpath d='M0 180 Q100 130, 200 180 T 400 180'/%3E%3Cpath d='M0 220 Q100 170, 200 220 T 400 220'/%3E%3Cpath d='M0 260 Q100 210, 200 260 T 400 260'/%3E%3Cpath d='M0 300 Q100 250, 200 300 T 400 300'/%3E%3Cpath d='M0 340 Q100 290, 200 340 T 400 340'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 400px 400px;
+            background-repeat: repeat;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+            background-blend-mode: overlay;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+        }
+
+        header, main, footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--text-white);
+            letter-spacing: 0.5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--accent-lime);
+            transition: var(--transition);
+        }
+        a:hover {
+            color: var(--accent-ochre);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========== ШАПКА ========== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(22, 33, 26, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 179, 66, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 12px 0;
+        }
+        /* ЛОГОТИП-КНОПКА */
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--accent-lime);
+            border-radius: 30px;
+            padding: 8px 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
+        }
+        .logo:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-ochre);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+        .logo:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+        .logo svg {
+            width: 44px;
+            height: 44px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+            animation: compassSway 4s ease-in-out infinite;
+            transform-origin: 50% 50%;
+            transition: animation-duration 0.3s ease;
+            flex-shrink: 0;
+        }
+        .logo:hover svg {
+            animation-duration: 1.5s;
+        }
+        @keyframes compassSway {
+            0% { transform: rotate(0deg); }
+            15% { transform: rotate(12deg); }
+            30% { transform: rotate(-8deg); }
+            45% { transform: rotate(6deg); }
+            60% { transform: rotate(-4deg); }
+            75% { transform: rotate(2deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .logo-text {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-white);
+            letter-spacing: 0.5px;
+            text-align: left;
+            line-height: 1.3;
+        }
+        .logo-text small {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--accent-lime);
+            letter-spacing: 0.5px;
+        }
+        .logo-text small:first-of-type {
+            letter-spacing: 1px;
+        }
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .main-nav a {
+            font-weight: 500;
+            color: var(--text-light);
+            position: relative;
+            padding: 4px 0;
+            cursor: pointer;
+        }
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-ochre);
+            transition: var(--transition);
+        }
+        .main-nav a:hover {
+            color: var(--accent-lime);
+        }
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+        .main-nav a.active {
+            color: var(--accent-ochre);
+            font-weight: 600;
+        }
+        .main-nav a.active::after {
+            width: 100%;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-body);
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: var(--accent-ochre);
+            color: #1A1A1A;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+        }
+        .btn-primary:hover {
+            background-color: #d4a017;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(184, 134, 11, 0.4);
+        }
+        /* Кнопка с призмами */
+        .btn-tourism {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: #1A1A1A;
+            font-family: var(--font-button);
+            font-weight: 400;
+            letter-spacing: 1.2px;
+            padding: 12px 28px;
+            border-radius: 30px;
+            box-shadow: 0 6px 0 #B85C0C, 0 10px 20px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+            transition: all 0.2s ease;
+            border: 1px solid #cc7000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-tourism svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+        .btn-tourism:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #B85C0C, 0 15px 25px rgba(0,0,0,0.4);
+            color: #000;
+            background: linear-gradient(135deg, #FFB52E, #FF9D1C);
+        }
+        .btn-tourism:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #B85C0C, 0 5px 10px rgba(0,0,0,0.2);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-lime);
+            color: var(--accent-lime);
+        }
+        .btn-outline:hover {
+            background: var(--accent-lime);
+            color: var(--bg-deep);
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn:focus-visible {
+            outline: 3px solid var(--accent-ochre);
+            outline-offset: 3px;
+        }
+
+        /* Мобильная навигация */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+                width: 100%;
+                order: 3;
+                background-color: rgba(22, 33, 26, 0.95);
+                padding: 16px 0;
+                border-radius: 0 0 16px 16px;
+            }
+            .main-nav.open {
+                display: block;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+            .header-inner {
+                gap: 10px;
+            }
+            .btn-tourism {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+            .btn-tourism svg {
+                width: 18px;
+                height: 18px;
+            }
+            .logo {
+                padding: 6px 14px;
+                gap: 8px;
+            }
+            .logo svg {
+                width: 36px;
+                height: 36px;
+            }
+            .logo-text {
+                font-size: 1rem;
+            }
+            .logo-text small {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* ========== СЕКЦИИ ОБЩИЕ ========== */
+        section {
+            padding: 80px 0;
+        }
+        .section-title {
+            font-size: 2.4rem;
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-ochre);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+        /* Ссылки в заголовках */
+        .section-title a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .section-title a:hover {
+            color: var(--accent-lime);
+        }
+
+        /* ========== HERO СЕКЦИЯ ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            background-image: url('https://picsum.photos/id/1015/1600/900'), linear-gradient(135deg, #16211A 0%, #1A2E1F 40%, #0d1a12 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-blend-mode: overlay;
+            z-index: 1;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(124,179,66,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 60%, rgba(184,134,11,0.06) 0%, transparent 40%);
+            animation: fog 12s infinite alternate ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes fog {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.9; transform: scale(1.08); }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            text-shadow: 0 6px 24px rgba(0,0,0,0.6);
+            margin-bottom: 16px;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            color: #f0f0f0;
+            max-width: 700px;
+            margin: 0 auto 32px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ========== О ПРОЕКТЕ ========== */
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background-color: var(--bg-pine);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+            border: 1px solid rgba(124,179,66,0.1);
+        }
+        a.feature-card-link {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+        a.feature-card-link:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-lime);
+            background-color: #274432;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-lime);
+            background-color: #274432;
+        }
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            color: var(--accent-lime);
+        }
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        /* ========== КАЛЕНДАРЬ ========== */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .event-card {
+            background-color: var(--bg-pine);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+            border: 1px solid transparent;
+            position: relative;
+        }
+        .event-card:hover {
+            border-color: var(--accent-ochre);
+            transform: translateY(-6px);
+        }
+        .event-date {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-ochre);
+            line-height: 1;
+        }
+        .event-date small {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            display: block;
+        }
+        .event-card h3 {
+            font-size: 1.5rem;
+            margin: 16px 0 8px;
+        }
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+            color: #b0c4b8;
+        }
+        .event-meta span {
+            background: rgba(0,0,0,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .event-card .btn {
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        /* ========== РЕЗУЛЬТАТЫ ========== */
+        .results-table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-pine);
+            min-width: 600px;
+        }
+        .results-table th,
+        .results-table td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(124,179,66,0.15);
+        }
+        .results-table th {
+            background-color: var(--bg-forest);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--accent-lime);
+            letter-spacing: 0.5px;
+        }
+        .results-table tbody tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.15);
+        }
+        .results-table tbody tr:hover {
+            background-color: rgba(76,122,52,0.2);
+        }
+        .link-protocol {
+            color: var(--accent-ochre);
+            font-weight: 500;
+        }
+        .all-results {
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* ========== ГАЛЕРЕЯ ========== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            transition: var(--transition);
+            aspect-ratio: 4 / 3;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 2.5rem;
+            color: var(--text-white);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .lightbox-caption {
+            color: var(--text-light);
+            margin-top: 16px;
+            font-size: 1.1rem;
+        }
+
+        /* ========== КОНТАКТЫ ========== */
+        .contacts-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .contact-info p {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            background-color: var(--bg-pine);
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .social-links a:hover {
+            background-color: var(--accent-moss);
+            color: var(--text-white);
+        }
+        .contact-form {
+            background-color: var(--bg-pine);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #d0d8d0;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--bg-forest);
+            border: 1px solid rgba(124,179,66,0.25);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-lime);
+            box-shadow: 0 0 0 3px rgba(124,179,66,0.2);
+        }
+        .map-placeholder {
+            margin-top: 40px;
+            background-color: var(--bg-pine);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            text-align: center;
+            color: #b0c4b8;
+            border: 1px dashed var(--accent-moss);
+        }
+
+        /* ========== ПОДВАЛ ========== */
+        .site-footer {
+            background-color: var(--bg-deep);
+            padding: 30px 0;
+            border-top: 1px solid rgba(124,179,66,0.2);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #a0b0a0;
+            position: relative;
+            z-index: 2;
+        }
+        .site-footer a {
+            color: var(--accent-lime);
+        }
+
+        /* ========== АНИМАЦИИ ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== ДЕКОРАТИВНЫЙ РАЗДЕЛИТЕЛЬ ========== */
+        .tree-divider {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 30px 0;
+            color: var(--accent-moss);
+        }
+        .tree-divider svg {
+            width: 30px;
+            height: 30px;
+            opacity: 0.7;
+        }
+
+        /* ========== СТРАНИЦА СБОРНИКА КАРТ (скрыта по умолчанию) ========== */
+        .page-content {
+            padding: 140px 0 80px;
+            display: none; /* скрываем, пока не активируем */
+        }
+        .page-content.active {
+            display: block;
+        }
+        .page-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .page-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-ochre);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+        .page-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-size: 1.1rem;
+            color: #b0c4b8;
+        }
+
+        /* Сетка карточек-заглушек */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 28px;
+            margin-top: 40px;
+        }
+        .map-card {
+            background-color: var(--bg-pine);
+            border-radius: var(--border-radius);
+            padding: 24px 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(124,179,66,0.1);
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0.9;
+        }
+        .map-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-lime);
+            background-color: #274432;
+        }
+        .map-card-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            color: var(--accent-lime);
+        }
+        .map-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .map-card p {
+            font-size: 0.9rem;
+            color: #b0c4b8;
+        }
+        .map-card .soon-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 12px;
+            background-color: rgba(184,134,11,0.2);
+            color: var(--accent-ochre);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            .page-content {
+                padding: 120px 0 60px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .contacts-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .btn-tourism {
+                font-size: 0.85rem;
+                padding: 10px 16px;
+            }
+            .logo {
+                padding: 4px 10px;
+            }
+            .logo svg {
+                width: 32px;
+                height: 32px;
+            }
+            .logo-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= ШАПКА (общая для обеих страниц) ================= -->
+    <header class="site-header" id="header">
+        <div class="container header-inner">
+            <!-- Логотип-кнопка (открывает меню) -->
+            <div class="logo" id="logoMenuBtn" role="button" tabindex="0" aria-label="Открыть меню">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="28" stroke="#7CB342" stroke-width="3" fill="#1A2E1F"/>
+                    <path d="M32 16 L38 38 L32 34 L26 38 Z" fill="#B8860B"/>
+                    <path d="M32 48 L26 28 L32 32 L38 28 Z" fill="#E0E0E0"/>
+                    <circle cx="32" cy="32" r="3" fill="#fff"/>
+                    <path d="M16 24 L20 18 L24 24 Z" fill="#4C7A34"/>
+                    <path d="M48 40 L52 34 L56 40 Z" fill="#4C7A34"/>
+                    <path d="M40 12 L43 7 L46 12 Z" fill="#4C7A34"/>
+                </svg>
+                <div class="logo-text">
+                    О-СРЕДА
+                    <small>Республика Карелия</small>
+                    <small>спортивное ориентирование</small>
+                </div>
+            </div>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="#about" class="nav-link" data-target="main">О проекте</a></li>
+                    <li><a href="#events" class="nav-link" data-target="main">Календарь</a></li>
+                    <li><a href="#results" class="nav-link" data-target="main">Результаты</a></li>
+                    <li><a href="#gallery" class="nav-link" data-target="main">Галерея</a></li>
+                    <li><a href="#maps" class="nav-link" data-target="maps" id="mapsNavLink">Сборник карт</a></li>
+                    <li><a href="#contacts" class="nav-link" data-target="main">Контакты</a></li>
+                </ul>
+            </nav>
+            <!-- Кнопка с призмами (остаётся на главной) -->
+            <a href="#events" class="btn btn-tourism nav-link" data-target="main">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3 L21 20 L3 20 Z" fill="#fff" stroke="#1A1A1A" stroke-width="1.5"/>
+                    <path d="M12 3 L15.5 20 L3 20 Z" fill="#FF8C00"/>
+                </svg>
+                <span>О-СРЕДА - среда обитания ориентировщиков!</span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3 L21 20 L3 20 Z" fill="#fff" stroke="#1A1A1A" stroke-width="1.5"/>
+                    <path d="M12 3 L15.5 20 L3 20 Z" fill="#FF8C00"/>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- ================= ГЛАВНАЯ СТРАНИЦА ================= -->
+    <main id="mainPage">
+        <!-- HERO -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1>Спортивное ориентирование в Республике Карелия</h1>
+                <p>Тренировочные старты и дикий мир приключений в городской среде доступный для всех. Открой для себя удивительный мир ориентирования с картой и компасом.</p>
+                <div class="hero-buttons">
+                    <a href="#events" class="btn btn-primary nav-link" data-target="main">Ближайшие старты</a>
+                    <a href="#about" class="btn btn-outline nav-link" data-target="main">Узнать больше</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- О ПРОЕКТЕ -->
+        <section id="about" class="container reveal">
+            <h2 class="section-title">Что такое О-СРЕДА?</h2>
+            <div class="about-text">
+                <p>«О-СРЕДА» — проект, объединяющий любителей спортивного ориентирования в Карелии. Мы проводим регулярные тренировки каждую среду (отсюда и название), открытые для новичков и профессионалов. Здесь вы сможете изучать карельские леса, улучшать навыки навигации и находить новых друзей.</p>
+                <p>Лес, карта, компас и команда единомышленников — всё, что нужно для приключения. Присоединяйтесь к нам, чтобы исследовать уникальную природу Карелии.</p>
+            </div>
+            <div class="tree-divider" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L15 8 L13 8 L16 12 L14 12 L17 16 L15 16 L18 20 L6 20 L9 16 L7 16 L10 12 L8 12 L11 8 L9 8 Z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L15 8 L13 8 L16 12 L14 12 L17 16 L15 16 L18 20 L6 20 L9 16 L7 16 L10 12 L8 12 L11 8 L9 8 Z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L15 8 L13 8 L16 12 L14 12 L17 16 L15 16 L18 20 L6 20 L9 16 L7 16 L10 12 L8 12 L11 8 L9 8 Z"/></svg>
+            </div>
+            <div class="features-grid">
+                <a href="#maps" class="feature-card feature-card-link nav-link" data-target="maps">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/><path d="M20 22 L28 22 M20 30 L40 30 M20 38 L32 38" stroke="currentColor" stroke-width="3"/><circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/><path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/></svg>
+                    </div>
+                    <h3>Сборник карт по спортивному ориентированию</h3>
+                    <p>Точные спортивные карты, составленные профессионалами специально для тренировок и соревнований.</p>
+                </a>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="32" r="24" stroke="currentColor"/><path d="M32 16 L40 32 L32 28 L24 32 Z" fill="currentColor"/><circle cx="32" cy="32" r="4" fill="#223D2B"/></svg>
+                    </div>
+                    <h3>Опытные наставники</h3>
+                    <p>Обучение работе с компасом и чтению карты для участников любого уровня подготовки.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><circle cx="20" cy="26" r="8" stroke="currentColor"/><circle cx="44" cy="26" r="8" stroke="currentColor"/><path d="M12 44 C12 36 18 32 20 32 C22 32 28 36 28 44" stroke="currentColor"/><path d="M36 44 C36 36 42 32 44 32 C46 32 52 36 52 44" stroke="currentColor"/><path d="M16 44 L48 44" stroke="currentColor" stroke-dasharray="3 3"/></svg>
+                    </div>
+                    <h3>Сообщество</h3>
+                    <p>Дружеская атмосфера, обмен опытом и здоровое времяпровождение на свежем воздухе.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- КАЛЕНДАРЬ -->
+        <section id="events" class="container reveal">
+            <h2 class="section-title">Календарь мероприятий</h2>
+            <div class="events-grid">
+                <article class="event-card">
+                    <div class="event-date">26 <small>февраля, среда</small></div>
+                    <h3>Тренировочный старт «Зимний лес»</h3>
+                    <p>Формат: лайт-спринт, 2 км. Отличный старт для новичков. Регистрация открыта до 25 февраля.</p>
+                    <div class="event-meta">
+                        <span>📍 Фонтаны</span>
+                        <span>⏰ 18:30</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Регистрация</a>
+                </article>
+                <article class="event-card">
+                    <div class="event-date">05 <small>марта, среда</small></div>
+                    <h3>Средовой спринт в Ястребином</h3>
+                    <p>Городской спринт с элементами паркового ориентирования. Дистанция 3 км.</p>
+                    <div class="event-meta">
+                        <span>📍 Ястребиное</span>
+                        <span>⏰ 19:00</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Регистрация</a>
+                </article>
+                <article class="event-card">
+                    <div class="event-date">19 <small>марта, среда</small></div>
+                    <h3>Ночное ориентирование «Совы Карелии»</h3>
+                    <p>Ночной старт с фонариками. Средняя дистанция 4 км. Опыт не обязателен, но приветствуется.</p>
+                    <div class="event-meta">
+                        <span>📍 Курган</span>
+                        <span>⏰ 21:00</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Регистрация</a>
+                </article>
+                <article class="event-card">
+                    <div class="event-date">02 <small>апреля, среда</small></div>
+                    <h3>Кросс-выбор «Каменные лабиринты»</h3>
+                    <p>Технически сложная дистанция с множеством контрольных пунктов. 5 км.</p>
+                    <div class="event-meta">
+                        <span>📍 Каменный бор</span>
+                        <span>⏰ 18:00</span>
+                    </div>
+                    <a href="#" class="btn btn-primary">Регистрация</a>
+                </article>
+            </div>
+            <p style="text-align:center; margin-top:24px;"><em>Ближайшее мероприятие: Среда, 26 февраля — Тренировочный старт «Зимний лес» в районе Фонтаны. Старт в 18:30.</em></p>
+        </section>
+
+        <!-- РЕЗУЛЬТАТЫ -->
+        <section id="results" class="container reveal">
+            <h2 class="section-title">Результаты прошедших стартов</h2>
+            <div class="results-table-wrapper">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Название</th>
+                            <th>Победители</th>
+                            <th>Протокол</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12.02.2026</td>
+                            <td>Зимний спринт «Снежный компас»</td>
+                            <td>Иван Петров, Анна Смирнова</td>
+                            <td><a href="#" class="link-protocol">PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>05.02.2026</td>
+                            <td>Вечерний старт «Городские огни»</td>
+                            <td>Максим Лесной, Ольга Ягель</td>
+                            <td><a href="#" class="link-protocol">PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>29.01.2026</td>
+                            <td>Кросс-эстафета «Таёжный вызов»</td>
+                            <td>Команда «Ель», Команда «Гранит»</td>
+                            <td><a href="#" class="link-protocol">PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>22.01.2026</td>
+                            <td>Ночной лабиринт «Совы»</td>
+                            <td>Дмитрий Волков, Елена Кедр</td>
+                            <td><a href="#" class="link-protocol">PDF</a></td>
+                        </tr>
+                        <tr>
+                            <td>15.01.2026</td>
+                            <td>Спринт «Зимняя сказка»</td>
+                            <td>Алексей Хвойный, Мария Сосна</td>
+                            <td><a href="#" class="link-protocol">PDF</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 20px;"><a href="#" class="all-results">Все результаты →</a></p>
+        </section>
+
+        <!-- ГАЛЕРЕЯ -->
+        <section id="gallery" class="container reveal">
+            <h2 class="section-title">Лесные моменты</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-caption="Старт в лесу"><img src="https://picsum.photos/id/1035/400/300" alt="Старт в лесу"></div>
+                <div class="gallery-item" data-caption="Отметка на КП"><img src="https://picsum.photos/id/1041/400/300" alt="Отметка на КП"></div>
+                <div class="gallery-item" data-caption="Финиш с улыбкой"><img src="https://picsum.photos/id/1043/400/300" alt="Финиш с улыбкой"></div>
+                <div class="gallery-item" data-caption="Тренировка по карте"><img src="https://picsum.photos/id/1050/400/300" alt="Тренировка по карте"></div>
+                <div class="gallery-item" data-caption="Карельский закат над озером"><img src="https://picsum.photos/id/1044/400/300" alt="Карельский закат"></div>
+                <div class="gallery-item" data-caption="Команда после старта"><img src="https://picsum.photos/id/1040/400/300" alt="Команда после старта"></div>
+                <div class="gallery-item" data-caption="Лесная чаща"><img src="https://picsum.photos/id/1039/400/300" alt="Лесная чаща"></div>
+                <div class="gallery-item" data-caption="Компас и карта"><img src="https://picsum.photos/id/1060/400/300" alt="Компас и карта"></div>
+            </div>
+        </section>
+
+        <!-- КАРТЫ (заглушка-ссылка) -->
+        <section id="maps" class="container reveal">
+            <h2 class="section-title">
+                <a href="#maps" class="nav-link" data-target="maps">Сборник карт по спортивному ориентированию</a>
+            </h2>
+            <p style="text-align:center; max-width:700px; margin: 0 auto 30px;">Нажмите на заголовок, чтобы перейти к сборнику карт.</p>
+            <div class="map-placeholder">
+                🗺️ <a href="#maps" class="nav-link" data-target="maps" style="color: var(--accent-lime);">Перейти к сборнику карт</a>
+            </div>
+        </section>
+
+        <!-- КОНТАКТЫ -->
+        <section id="contacts" class="container reveal">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contacts-wrapper">
+                <div class="contact-info">
+                    <p>📧 <a href="mailto:info@o-sreda.ru">info@o-sreda.ru</a></p>
+                    <p>📞 <a href="tel:+79110000000">+7 (911) 000-00-00</a></p>
+                    <p>📍 Петрозаводск, старт от лыжной базы «Курган»</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Telegram">Telegram</a>
+                        <a href="#" aria-label="ВКонтакте">VK</a>
+                    </div>
+                    <p style="margin-top:20px;"><em>О-среда — Наша среда обитания!</em></p>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm" action="#" method="post">
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Сообщение</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Ваш вопрос или предложение" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= СТРАНИЦА СБОРНИКА КАРТ ================= -->
+    <div class="page-content" id="mapsPage">
+        <div class="container">
+            <h1 class="page-title">Сборник карт по спортивному ориентированию</h1>
+            <p class="page-subtitle">Здесь вы найдёте спортивные карты районов Карелии, используемые на наших тренировках и соревнованиях. Архив карт находится в стадии наполнения — скоро появятся подробные материалы для скачивания.</p>
+
+            <div class="cards-grid">
+                <div class="map-card">
+                    <div class="map-card-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/>
+                            <path d="M20 20 L28 20 M20 26 L40 26 M20 32 L32 32" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Район Курган</h3>
+                    <p>Лыжная база «Курган», окрестности</p>
+                    <span class="soon-badge">Скоро в архиве</span>
+                </div>
+                <div class="map-card">
+                    <div class="map-card-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/>
+                            <path d="M20 20 L28 20 M20 26 L40 26 M20 32 L32 32" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Ястребиное</h3>
+                    <p>Парковая зона с пересечённым рельефом</p>
+                    <span class="soon-badge">Скоро в архиве</span>
+                </div>
+                <div class="map-card">
+                    <div class="map-card-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/>
+                            <path d="M20 20 L28 20 M20 26 L40 26 M20 32 L32 32" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Фонтаны</h3>
+                    <p>Городской спринтерский полигон</p>
+                    <span class="soon-badge">Скоро в архиве</span>
+                </div>
+                <div class="map-card">
+                    <div class="map-card-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/>
+                            <path d="M20 20 L28 20 M20 26 L40 26 M20 32 L32 32" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Каменный бор</h3>
+                    <p>Лесной массив с каменистыми грядами</p>
+                    <span class="soon-badge">Скоро в архиве</span>
+                </div>
+                <div class="map-card">
+                    <div class="map-card-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/>
+                            <path d="M20 20 L28 20 M20 26 L40 26 M20 32 L32 32" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Озеро Лососиное</h3>
+                    <p>Прибрежная зона с сложным рельефом</p>
+                    <span class="soon-badge">Скоро в архиве</span>
+                </div>
+                <div class="map-card">
+                    <div class="map-card-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor"/>
+                            <path d="M20 20 L28 20 M20 26 L40 26 M20 32 L32 32" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="44" cy="42" r="6" stroke="currentColor" fill="none"/>
+                            <path d="M44 36 L50 42 L44 48 L38 42 Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Парк Ямка</h3>
+                    <p>Городской парк с сетью тропинок</p>
+                    <span class="soon-badge">Скоро в архиве</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ПОДВАЛ (общий) ================= -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2026 О-СРЕДА Республика Карелия | <a href="#" class="nav-link" data-target="main">На главную</a> | <a href="#">Политика конфиденциальности</a></p>
+        </div>
+    </footer>
+
+    <!-- Лайтбокс -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">&times;</button>
+        <img src="" alt="Просмотр фото" id="lightboxImg">
+        <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+
+    <script>
+        (function() {
+            // --- Переключение страниц (главная / сборник карт) ---
+            const mainPage = document.getElementById('mainPage');
+            const mapsPage = document.getElementById('mapsPage');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function showPage(target) {
+                if (target === 'maps') {
+                    mainPage.style.display = 'none';
+                    mapsPage.classList.add('active');
+                    // Обновляем активный пункт меню
+                    document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
+                    document.getElementById('mapsNavLink').classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    mapsPage.classList.remove('active');
+                    mainPage.style.display = 'block';
+                    document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
+                    // Подсветка соответствующего пункта (можно не делать)
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                // Закрываем мобильное меню, если открыто
+                const nav = document.getElementById('mainNav');
+                nav.classList.remove('open');
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-target');
+                    if (target) {
+                        showPage(target);
+                    } else {
+                        // Если обычная ссылка-якорь, прокручиваем
+                        const href = this.getAttribute('href');
+                        if (href && href.startsWith('#')) {
+                            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+
+            // --- Мобильное меню (логотип-кнопка) ---
+            const logoMenuBtn = document.getElementById('logoMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+            if (logoMenuBtn && mainNav) {
+                logoMenuBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('open');
+                });
+                mainNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mainNav.classList.remove('open');
+                    });
+                });
+                logoMenuBtn.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        mainNav.classList.toggle('open');
+                    }
+                });
+            }
+
+            // --- Появление секций при скролле ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+            revealElements.forEach(el => observer.observe(el));
+
+            // --- Лайтбокс для галереи ---
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const img = item.querySelector('img');
+                    const caption = item.getAttribute('data-caption') || '';
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = img.alt;
+                    lightboxCaption.textContent = caption;
+                    lightbox.classList.add('active');
+                });
+            });
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                lightboxImg.src = '';
+            }
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeLightbox();
+            });
+
+            // --- Обработка формы ---
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Спасибо за сообщение! Мы ответим в ближайшее время.');
+                    contactForm.reset();
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
