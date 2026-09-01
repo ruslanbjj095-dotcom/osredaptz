@@ -246,7 +246,7 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 18px rgba(184, 134, 11, 0.4);
         }
-        /* Кнопка с призмами */
+        /* Кнопка с призмами (переехала в hero) */
         .btn-tourism {
             background: linear-gradient(135deg, #FFA500, #FF8C00);
             color: #1A1A1A;
@@ -343,35 +343,6 @@
             }
         }
 
-        /* ========== СЕКЦИИ ОБЩИЕ ========== */
-        section {
-            padding: 80px 0;
-        }
-        .section-title {
-            font-size: 2.4rem;
-            text-align: center;
-            margin-bottom: 48px;
-            position: relative;
-        }
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--accent-ochre);
-            margin: 16px auto 0;
-            border-radius: 2px;
-        }
-        /* Ссылки в заголовках */
-        .section-title a {
-            color: var(--text-white);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        .section-title a:hover {
-            color: var(--accent-lime);
-        }
-
         /* ========== HERO СЕКЦИЯ ========== */
         .hero {
             min-height: 100vh;
@@ -409,6 +380,10 @@
             z-index: 3;
             max-width: 900px;
             animation: fadeInUp 1.2s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -418,13 +393,13 @@
             font-size: clamp(2.5rem, 7vw, 4.5rem);
             font-weight: 700;
             text-shadow: 0 6px 24px rgba(0,0,0,0.6);
-            margin-bottom: 16px;
+            margin-bottom: 0;
         }
         .hero p {
             font-size: 1.3rem;
             color: #f0f0f0;
             max-width: 700px;
-            margin: 0 auto 32px;
+            margin: 0 auto;
             text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
         .hero-buttons {
@@ -432,6 +407,35 @@
             gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
+        }
+
+        /* ========== СЕКЦИИ ОБЩИЕ ========== */
+        section {
+            padding: 80px 0;
+        }
+        .section-title {
+            font-size: 2.4rem;
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-ochre);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+        /* Ссылки в заголовках */
+        .section-title a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .section-title a:hover {
+            color: var(--accent-lime);
         }
 
         /* ========== О ПРОЕКТЕ ========== */
@@ -537,6 +541,139 @@
         .event-card .btn {
             margin-top: 16px;
             width: 100%;
+        }
+
+        /* ========== МИНИ-КАЛЕНДАРЬ ========== */
+        .mini-calendar {
+            max-width: 400px;
+            margin: 40px auto;
+            background-color: var(--bg-pine);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(124,179,66,0.1);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .calendar-header h3 {
+            font-size: 1.4rem;
+            color: var(--text-white);
+            margin: 0;
+        }
+        .cal-nav-btn {
+            background: none;
+            border: 2px solid var(--accent-lime);
+            color: var(--accent-lime);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cal-nav-btn:hover {
+            background-color: var(--accent-lime);
+            color: var(--bg-deep);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        .calendar-weekday {
+            font-weight: 600;
+            color: var(--accent-lime);
+            padding: 6px 0;
+            font-size: 0.8rem;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            cursor: default;
+            transition: var(--transition);
+            position: relative;
+        }
+        .calendar-day.has-event {
+            background-color: var(--accent-ochre);
+            color: #1A1A1A;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(184,134,11,0.5);
+        }
+        .calendar-day.has-event:hover {
+            transform: scale(1.1);
+            background-color: #d4a017;
+        }
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+        .calendar-day.today {
+            border: 2px solid var(--accent-lime);
+        }
+
+        /* Модальное окно события */
+        .event-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .event-modal.active {
+            display: flex;
+        }
+        .event-modal-content {
+            background-color: var(--bg-pine);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+            border: 1px solid var(--accent-lime);
+        }
+        .event-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .event-modal-close:hover {
+            color: var(--accent-ochre);
+        }
+        .event-modal-title {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+        .event-modal-details {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        .event-modal-details p {
+            margin-bottom: 8px;
         }
 
         /* ========== РЕЗУЛЬТАТЫ ========== */
@@ -753,10 +890,10 @@
             opacity: 0.7;
         }
 
-        /* ========== СТРАНИЦА СБОРНИКА КАРТ (скрыта по умолчанию) ========== */
+        /* ========== СТРАНИЦА СБОРНИКА КАРТ ========== */
         .page-content {
             padding: 140px 0 80px;
-            display: none; /* скрываем, пока не активируем */
+            display: none;
         }
         .page-content.active {
             display: block;
@@ -867,12 +1004,15 @@
             .logo-text {
                 font-size: 0.9rem;
             }
+            .mini-calendar {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ================= ШАПКА (общая для обеих страниц) ================= -->
+    <!-- ================= ШАПКА (без туристической кнопки) ================= -->
     <header class="site-header" id="header">
         <div class="container header-inner">
             <!-- Логотип-кнопка (открывает меню) -->
@@ -902,26 +1042,26 @@
                     <li><a href="#contacts" class="nav-link" data-target="main">Контакты</a></li>
                 </ul>
             </nav>
-            <!-- Кнопка с призмами (остаётся на главной) -->
-            <a href="#events" class="btn btn-tourism nav-link" data-target="main">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 3 L21 20 L3 20 Z" fill="#fff" stroke="#1A1A1A" stroke-width="1.5"/>
-                    <path d="M12 3 L15.5 20 L3 20 Z" fill="#FF8C00"/>
-                </svg>
-                <span>О-СРЕДА - среда обитания ориентировщиков!</span>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 3 L21 20 L3 20 Z" fill="#fff" stroke="#1A1A1A" stroke-width="1.5"/>
-                    <path d="M12 3 L15.5 20 L3 20 Z" fill="#FF8C00"/>
-                </svg>
-            </a>
         </div>
     </header>
 
     <!-- ================= ГЛАВНАЯ СТРАНИЦА ================= -->
     <main id="mainPage">
-        <!-- HERO -->
+        <!-- HERO с кнопкой по центру сверху -->
         <section class="hero" id="hero">
             <div class="hero-content">
+                <!-- Туристическая кнопка по центру -->
+                <a href="#events" class="btn btn-tourism nav-link" data-target="main">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3 L21 20 L3 20 Z" fill="#fff" stroke="#1A1A1A" stroke-width="1.5"/>
+                        <path d="M12 3 L15.5 20 L3 20 Z" fill="#FF8C00"/>
+                    </svg>
+                    <span>О-СРЕДА - среда обитания ориентировщиков!</span>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3 L21 20 L3 20 Z" fill="#fff" stroke="#1A1A1A" stroke-width="1.5"/>
+                        <path d="M12 3 L15.5 20 L3 20 Z" fill="#FF8C00"/>
+                    </svg>
+                </a>
                 <h1>Спортивное ориентирование в Республике Карелия</h1>
                 <p>Тренировочные старты и дикий мир приключений в городской среде доступный для всех. Открой для себя удивительный мир ориентирования с картой и компасом.</p>
                 <div class="hero-buttons">
@@ -971,6 +1111,19 @@
         <!-- КАЛЕНДАРЬ -->
         <section id="events" class="container reveal">
             <h2 class="section-title">Календарь мероприятий</h2>
+            <!-- Мини-календарь -->
+            <div class="mini-calendar" id="miniCalendar">
+                <div class="calendar-header">
+                    <button id="prevMonth" class="cal-nav-btn" aria-label="Предыдущий месяц">←</button>
+                    <h3 id="calendarMonthYear">Февраль 2026</h3>
+                    <button id="nextMonth" class="cal-nav-btn" aria-label="Следующий месяц">→</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Ячейки будут сгенерированы JS -->
+                </div>
+            </div>
+
+            <!-- Карточки событий -->
             <div class="events-grid">
                 <article class="event-card">
                     <div class="event-date">26 <small>февраля, среда</small></div>
@@ -1216,7 +1369,7 @@
         </div>
     </div>
 
-    <!-- ================= ПОДВАЛ (общий) ================= -->
+    <!-- ================= ПОДВАЛ ================= -->
     <footer class="site-footer">
         <div class="container">
             <p>© 2026 О-СРЕДА Республика Карелия | <a href="#" class="nav-link" data-target="main">На главную</a> | <a href="#">Политика конфиденциальности</a></p>
@@ -1230,6 +1383,16 @@
         <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
 
+    <!-- Модальное окно события -->
+    <div class="event-modal" id="eventModal">
+        <div class="event-modal-content">
+            <button class="event-modal-close" id="eventModalClose">&times;</button>
+            <h3 class="event-modal-title" id="eventModalTitle"></h3>
+            <div class="event-modal-details" id="eventModalDetails"></div>
+            <a href="#" id="eventModalLink" class="btn btn-primary">Регистрация</a>
+        </div>
+    </div>
+
     <script>
         (function() {
             // --- Переключение страниц (главная / сборник карт) ---
@@ -1241,18 +1404,16 @@
                 if (target === 'maps') {
                     mainPage.style.display = 'none';
                     mapsPage.classList.add('active');
-                    // Обновляем активный пункт меню
                     document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
-                    document.getElementById('mapsNavLink').classList.add('active');
+                    const mapsNavLink = document.getElementById('mapsNavLink');
+                    if (mapsNavLink) mapsNavLink.classList.add('active');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     mapsPage.classList.remove('active');
                     mainPage.style.display = 'block';
                     document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
-                    // Подсветка соответствующего пункта (можно не делать)
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
-                // Закрываем мобильное меню, если открыто
                 const nav = document.getElementById('mainNav');
                 nav.classList.remove('open');
             }
@@ -1264,7 +1425,6 @@
                     if (target) {
                         showPage(target);
                     } else {
-                        // Если обычная ссылка-якорь, прокручиваем
                         const href = this.getAttribute('href');
                         if (href && href.startsWith('#')) {
                             document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
@@ -1343,6 +1503,167 @@
                     contactForm.reset();
                 });
             }
+
+            // ========== МИНИ-КАЛЕНДАРЬ ==========
+            const eventsData = {
+                '2026-02-26': {
+                    title: 'Тренировочный старт «Зимний лес»',
+                    place: '📍 Фонтаны',
+                    time: '⏰ 18:30',
+                    description: 'Формат: лайт-спринт, 2 км. Отличный старт для новичков.',
+                    link: '#'
+                },
+                '2026-03-05': {
+                    title: 'Средовой спринт в Ястребином',
+                    place: '📍 Ястребиное',
+                    time: '⏰ 19:00',
+                    description: 'Городской спринт с элементами паркового ориентирования. Дистанция 3 км.',
+                    link: '#'
+                },
+                '2026-03-19': {
+                    title: 'Ночное ориентирование «Совы Карелии»',
+                    place: '📍 Курган',
+                    time: '⏰ 21:00',
+                    description: 'Ночной старт с фонариками. Средняя дистанция 4 км.',
+                    link: '#'
+                },
+                '2026-04-02': {
+                    title: 'Кросс-выбор «Каменные лабиринты»',
+                    place: '📍 Каменный бор',
+                    time: '⏰ 18:00',
+                    description: 'Технически сложная дистанция с множеством контрольных пунктов. 5 км.',
+                    link: '#'
+                },
+                '2026-09-02': {
+                    title: 'Тренировка «Фонтаны»',
+                    place: '📍 Фонтаны',
+                    time: '⏰ 18:00',
+                    description: 'Тренировка по спортивному ориентированию в районе Фонтаны.',
+                    link: '#'
+                }
+            };
+
+            let currentMonth = 1; // 0 = январь, 1 = февраль, 2 = март, 3 = апрель, 4 = май...
+            let currentYear = 2026;
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            const monthYearLabel = document.getElementById('calendarMonthYear');
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+
+            // Модальное окно события
+            const eventModal = document.getElementById('eventModal');
+            const eventModalTitle = document.getElementById('eventModalTitle');
+            const eventModalDetails = document.getElementById('eventModalDetails');
+            const eventModalLink = document.getElementById('eventModalLink');
+            const eventModalClose = document.getElementById('eventModalClose');
+
+            function formatDateKey(year, month, day) {
+                return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            }
+
+            function renderCalendar() {
+                const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                monthYearLabel.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+                const firstDay = new Date(currentYear, currentMonth, 1);
+                const lastDay = new Date(currentYear, currentMonth + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDay = firstDay.getDay(); // 0 - воскресенье, 1 - понедельник ...
+
+                // Очищаем сетку
+                calendarGrid.innerHTML = '';
+
+                // Добавляем заголовки дней недели
+                const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                weekdays.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'calendar-weekday';
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+
+                // Вычисляем смещение для понедельника как первого дня
+                let offset = startingDay === 0 ? 6 : startingDay - 1; // если воскресенье, сдвиг 6
+
+                // Пустые ячейки до первого дня
+                for (let i = 0; i < offset; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day other-month';
+                    calendarGrid.appendChild(emptyDay);
+                }
+
+                // Дни текущего месяца
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+
+                    const dateKey = formatDateKey(currentYear, currentMonth, day);
+                    if (eventsData[dateKey]) {
+                        dayElement.classList.add('has-event');
+                        dayElement.addEventListener('click', function() {
+                            const event = eventsData[dateKey];
+                            eventModalTitle.textContent = event.title;
+                            eventModalDetails.innerHTML = `<p>${event.description}</p><p>${event.place} ${event.time}</p>`;
+                            eventModalLink.href = event.link;
+                            eventModal.classList.add('active');
+                        });
+                    }
+
+                    // Выделяем сегодняшнюю дату (заглушка: можно не выделять, но пусть будет)
+                    const today = new Date();
+                    if (currentYear === today.getFullYear() && currentMonth === today.getMonth() && day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+
+                    calendarGrid.appendChild(dayElement);
+                }
+
+                // Добавляем ячейки других месяцев, чтобы заполнить последнюю строку (необязательно)
+                const totalCells = offset + daysInMonth;
+                const remainder = totalCells % 7;
+                if (remainder !== 0) {
+                    for (let i = 0; i < 7 - remainder; i++) {
+                        const emptyDay = document.createElement('div');
+                        emptyDay.className = 'calendar-day other-month';
+                        calendarGrid.appendChild(emptyDay);
+                    }
+                }
+            }
+
+            // Обработчики переключения месяцев
+            prevMonthBtn.addEventListener('click', function() {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', function() {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar();
+            });
+
+            // Закрытие модального окна события
+            eventModalClose.addEventListener('click', function() {
+                eventModal.classList.remove('active');
+            });
+            eventModal.addEventListener('click', function(e) {
+                if (e.target === eventModal) eventModal.classList.remove('active');
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') eventModal.classList.remove('active');
+            });
+
+            // Инициализация календаря
+            renderCalendar();
         })();
     </script>
 </body>
