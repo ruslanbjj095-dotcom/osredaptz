@@ -1115,7 +1115,7 @@
             <div class="mini-calendar" id="miniCalendar">
                 <div class="calendar-header">
                     <button id="prevMonth" class="cal-nav-btn" aria-label="Предыдущий месяц">←</button>
-                    <h3 id="calendarMonthYear">Февраль 2026</h3>
+                    <h3 id="calendarMonthYear">Сентябрь 2026</h3>
                     <button id="nextMonth" class="cal-nav-btn" aria-label="Следующий месяц">→</button>
                 </div>
                 <div class="calendar-grid" id="calendarGrid">
@@ -1400,7 +1400,7 @@
             const mapsPage = document.getElementById('mapsPage');
             const navLinks = document.querySelectorAll('.nav-link');
 
-            function showPage(target) {
+            function showPage(target, anchor) {
                 if (target === 'maps') {
                     mainPage.style.display = 'none';
                     mapsPage.classList.add('active');
@@ -1412,7 +1412,14 @@
                     mapsPage.classList.remove('active');
                     mainPage.style.display = 'block';
                     document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (anchor && anchor !== '#') {
+                        const targetElement = document.querySelector(anchor);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                 }
                 const nav = document.getElementById('mainNav');
                 nav.classList.remove('open');
@@ -1422,13 +1429,15 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const target = this.getAttribute('data-target');
+                    const href = this.getAttribute('href');
+                    let anchor = null;
+                    if (href && href.startsWith('#')) {
+                        anchor = href;
+                    }
                     if (target) {
-                        showPage(target);
-                    } else {
-                        const href = this.getAttribute('href');
-                        if (href && href.startsWith('#')) {
-                            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-                        }
+                        showPage(target, anchor);
+                    } else if (href && href.startsWith('#')) {
+                        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
                     }
                 });
             });
@@ -1543,7 +1552,7 @@
                 }
             };
 
-            let currentMonth = 1; // 0 = январь, 1 = февраль, 2 = март, 3 = апрель, 4 = май...
+            let currentMonth = 8; // 0 = январь, 8 = сентябрь
             let currentYear = 2026;
 
             const calendarGrid = document.getElementById('calendarGrid');
@@ -1611,9 +1620,8 @@
                         });
                     }
 
-                    // Выделяем сегодняшнюю дату (заглушка: можно не выделять, но пусть будет)
-                    const today = new Date();
-                    if (currentYear === today.getFullYear() && currentMonth === today.getMonth() && day === today.getDate()) {
+                    // Выделяем сегодняшнюю дату (заглушка: 1 сентября 2026)
+                    if (currentYear === 2026 && currentMonth === 8 && day === 1) {
                         dayElement.classList.add('today');
                     }
 
